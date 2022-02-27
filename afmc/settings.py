@@ -14,6 +14,11 @@ from pathlib import Path
 import environ
 import os
 
+env = environ.Env()
+
+# read th .env file
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app.apps.AppConfig'
 ]
 
 MIDDLEWARE = [
@@ -76,13 +82,25 @@ WSGI_APPLICATION = 'afmc.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+local = env('local')
+if local:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+     DATABASES = {
+        'default': {
+            'ENGINE': env("DJANGO_DB_ENGINE"),
+            'NAME': env("DJANGO_DB_NAME"),
+            'USER': env("DJANGO_DB_USER"),
+            'PASSWORD': env("DJANGO_DB_PASSWORD"),
+            'HOST': env("DJANGO_DB_HOST"),
+            'PORT': env("DJANGO_DB_PORT"),
+        }
+    }
 
 
 # Password validation
