@@ -12,6 +12,7 @@ class Provider(models.Model):
         ('Nurse', 'Nurse'),
     ]
     type = models.CharField(max_length=10, choices=TYPES, default='Doctor')
+    license_number = models.CharField(max_length=20, help_text="enter license number", blank=True)
 
     def __str__(self):
         return f'{self.first_name} | {self.last_name}'
@@ -48,7 +49,7 @@ class Credentialing(models.Model):
     ]
     type = models.CharField(max_length=20, choices=TYPES, default='Reappointment')
     start_date = models.DateField(help_text = 'enter start date')
-    end_date = models.DateField(help_text = 'enter completed date')
+    end_date = models.DateField(help_text = 'enter completed date', blank=True)
     year = models.IntegerField(help_text = 'enter year of Credentialing')
     C_STATUS = [
         ('backlog', 'backlog'),
@@ -59,3 +60,5 @@ class Credentialing(models.Model):
     ]
     status = models.CharField(max_length=20, choices=C_STATUS, default='backlog')
     provider = models.ForeignKey(Provider, on_delete=models.SET_NULL, null=True)
+    license_duedate = models.DateField(help_text = 'enter start date', blank=True)
+    remarks = models.TextField(max_length=600, help_text="remarks/comments", blank=True)
