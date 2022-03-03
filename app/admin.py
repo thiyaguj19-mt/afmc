@@ -20,3 +20,5 @@ class CredentialingAdmin(admin.ModelAdmin):
     list_display = ('type', 'year', 'status', 'license_duedate', 'provider')
     list_filter = ('type', 'status', 'license_duedate', 'year', 'provider')
 admin.site.register(Credentialing, CredentialingAdmin)
+
+admin.site.site_header = 'Ashland Free Medical Clinic'
