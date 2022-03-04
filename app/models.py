@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Volunteer(models.Model):
@@ -66,7 +67,7 @@ class Credentialing(models.Model):
     type = models.CharField(max_length=20, choices=TYPES)
     start_date = models.DateField(help_text = 'enter start date')
     end_date = models.DateField(help_text = 'enter completed date', blank=True)
-    year = models.IntegerField(help_text = 'enter year of Credentialing')
+    year = models.IntegerField(help_text = 'enter year of Credentialing', default=datetime.now().year)
     C_STATUS = [
         ('backlog', 'backlog'),
         ('assigned', 'assigned'),
